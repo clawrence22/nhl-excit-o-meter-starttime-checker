@@ -10,9 +10,9 @@ variable "project_name" {
   default     = "nhl-excit-o-meter-data"
 }
 
-variable "app_image" {
-  description = "Container image URI in ECR."
+variable "lambda_version" {
+  description = "Version tag for Lambda deployment."
   type        = string
-  default     = "871806636838.dkr.ecr.us-east-1.amazonaws.com/nhl-excit-o-meter-starttime-checker:latest"
+  default     = "latest"
 }
 

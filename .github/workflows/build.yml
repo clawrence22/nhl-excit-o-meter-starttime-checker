@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build and Deploy Lambda ZIP
 
 on:
   push:
@@ -8,12 +8,11 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  AWS_ACCOUNT_ID: "871806636838"
-  ECR_REPOSITORY_NAME: nhl-excit-o-meter-starttime-checker
-  VERSION: latest
+  S3_BUCKET: nhl-excit-o-meter-starttime-checker-lambda-deploy
+  VERSION: ${{ github.sha }}
 
 jobs:
-  tests-docker-build:
+  build-deploy-lambda:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -21,50 +20,35 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    # - name: Set up Python
-    #   uses: actions/setup-python@v5
-    #   with:
-    #     python-version: '3.11'
-    # - name: Install dependencies
-    #   run: |
-    #     python -m pip install --upgrade pip
-    #     pip install -e .
-    #     pip install pytest pytest-json-ctrf
-    # - name: Test with pytest
-    #   run: |
-    #     pytest --ctrf report.json
-    # - name: Publish Test Report
-    #   uses: ctrf-io/github-test-reporter@v1
-    #   with:
-    #     report-path: 'report.json'
-    #     github-report: true
-    #   if: always()   
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Create deployment package
+      run: |
+        zip -r lambda_function.zip lambda_function.py
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-region: ${{ env.AWS_REGION }}
         role-to-assume: arn:aws:iam::871806636838:role/github-actions
-        role-session-name: github-actions-ecr
+        role-session-name: github-actions-lambda-deploy
 
     - name: Verify AWS identity
       run: aws sts get-caller-identity
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v2
-
-    - name: Build image
+    - name: Upload to S3
       run: |
-        docker buildx build \
-          --platform linux/arm64 \
-          --push \
-          -t ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_NAME }}:${{ env.VERSION }} \
-          .
+        aws s3 cp lambda_function.zip s3://${{ env.S3_BUCKET }}/lambda_function-${{ env.VERSION }}.zip
 
-    - name: Image pushed
+    - name: Deployment complete
       run: |
-        echo "Image pushed to ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY_NAME }}:${{ env.VERSION }}"
+        echo "Lambda ZIP uploaded to s3://${{ env.S3_BUCKET }}/lambda_function-${{ env.VERSION }}.zip"

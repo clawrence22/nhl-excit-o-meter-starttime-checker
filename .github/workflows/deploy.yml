@@ -3,7 +3,7 @@ name: Deploy with Terraform
 on:
   workflow_run:
     workflows:
-      - Build and Push Docker Image
+      - Build and Deploy Lambda ZIP
     types:
       - completed
   workflow_dispatch:
@@ -16,7 +16,6 @@ on:
 env:
   AWS_REGION: us-east-1
   AWS_ACCOUNT_ID: "871806636838"
-  ECR_REPOSITORY_NAME: nhl-excit-o-meter-starttime-checker
 
 jobs:
   terraform-deploy:
@@ -29,19 +28,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Resolve image tag
-        id: image
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.image_tag }}" ]; then
-            TAG="${{ inputs.image_tag }}"
-          elif [ "${{ github.event_name }}" = "workflow_run" ]; then
-            TAG="${{ github.event.workflow_run.head_sha }}"
-          else
-            TAG="${{ github.sha }}"
-          fi
-          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
-          echo "uri=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:$TAG" >> "$GITHUB_OUTPUT"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
