@@ -1,0 +1,38 @@
+backend/venv/*
+frontend/.DS_Store
+.DS_Store
+percentages.txt
+**/__pycache__/**
+.terraform/
+xgModel/*
+runXgModel.sh
+prod.env
+docker-compose-local.yml
+start_ssm.sh
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*.auto.tfvars
+

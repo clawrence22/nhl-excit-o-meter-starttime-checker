@@ -1,0 +1,1 @@
+podman buildx build --platform linux/amd64 -t docker-image:test . && podman run --platform linux/amd64 -p 9000:8080 docker-image:test
