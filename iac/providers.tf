@@ -3,7 +3,7 @@ terraform {
 
   backend "s3" {
     bucket       = "nhl-excite-o-meter-tf-state"
-    key          = "nhl-excite-o-meter-starttime-checker/prod/terraform.tfstate"
+    key          = "nhl-excit-o-meter-starttime-checker/prod/terraform.tfstate"
     region       = "us-east-1"
     encrypt      = true
     use_lockfile = true

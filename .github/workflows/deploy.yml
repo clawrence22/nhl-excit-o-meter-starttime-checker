@@ -16,7 +16,7 @@ on:
 env:
   AWS_REGION: us-east-1
   AWS_ACCOUNT_ID: "871806636838"
-  ECR_REPOSITORY_NAME: nhl-excite-o-meter-starttime-checker
+  ECR_REPOSITORY_NAME: nhl-excit-o-meter-starttime-checker
 
 jobs:
   terraform-deploy:

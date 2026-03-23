@@ -18,7 +18,7 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "lambda" {
-  name               = "nhl-excite-o-meter-starttime-checker-role"
+  name               = "nhl-excit-o-meter-starttime-checker-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
 }
 
@@ -47,7 +47,7 @@ resource "aws_iam_role_policy_attachment" "ecr-attach" {
 }
 
 resource "aws_lambda_function" "mylambda" {
-  function_name = "nhl-excite-o-meter-starttime-checker"
+  function_name = "nhl-excit-o-meter-starttime-checker"
   role          = aws_iam_role.lambda.arn
   package_type  = "Image"
   image_uri     = "${var.app_image}"

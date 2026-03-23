@@ -7,12 +7,12 @@ variable "aws_region" {
 variable "project_name" {
   description = "Project prefix for resource names."
   type        = string
-  default     = "nhl-excite-o-meter-data"
+  default     = "nhl-excit-o-meter-data"
 }
 
 variable "app_image" {
   description = "Container image URI in ECR."
   type        = string
-  default     = "871806636838.dkr.ecr.us-east-1.amazonaws.com/nhl-excite-o-meter-starttime-checker:1.0.0"
+  default     = "871806636838.dkr.ecr.us-east-1.amazonaws.com/nhl-excit-o-meter-starttime-checker:1.0.0"
 }
 
