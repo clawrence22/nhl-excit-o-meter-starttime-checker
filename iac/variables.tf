@@ -13,6 +13,6 @@ variable "project_name" {
 variable "app_image" {
   description = "Container image URI in ECR."
   type        = string
-  default     = "871806636838.dkr.ecr.us-east-1.amazonaws.com/nhl-excit-o-meter-starttime-checker:1.0.0"
+  default     = "871806636838.dkr.ecr.us-east-1.amazonaws.com/nhl-excit-o-meter-starttime-checker:latest"
 }
 
