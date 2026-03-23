@@ -3,19 +3,15 @@ name: Deploy with Terraform
 on:
   workflow_run:
     workflows:
-      - Build and Deploy Lambda ZIP
+      - Build and Push Docker Image
     types:
       - completed
   workflow_dispatch:
-    inputs:
-      image_tag:
-        description: "Optional image tag to deploy (defaults to triggering commit SHA)"
-        required: false
-        type: string
 
 env:
   AWS_REGION: us-east-1
   AWS_ACCOUNT_ID: "871806636838"
+  ECR_REPOSITORY_NAME: nhl-excit-o-meter-starttime-checker
 
 jobs:
   terraform-deploy:
@@ -46,6 +42,7 @@ jobs:
       - name: Terraform Plan
         run: |
           terraform -chdir=iac plan -input=false \
+            -var="lambda_version=${{ github.sha }}" \
             -out=tfplan
 
       - name: Terraform Apply
