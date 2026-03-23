@@ -32,5 +32,5 @@ resource "aws_lambda_function" "mylambda" {
   s3_key        = "lambda_function-${var.lambda_version}.zip"
 
   memory_size = 512
-  timeout     = 30
+  timeout     = 60
 }
