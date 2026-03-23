@@ -27,11 +27,18 @@ data "aws_iam_policy_document" "ecr_access" {
   statement {
     effect = "Allow" 
     actions = [
+      "ecr:GetAuthorizationToken"
+    ]
+    resources = ["*"]
+  }
+  statement {
+    effect = "Allow" 
+    actions = [
       "ecr:GetDownloadUrlForLayer",
       "ecr:BatchGetImage",
       "ecr:BatchCheckLayerAvailability"
     ]
-    resources = ["${aws_ecr_repository.ecr.arn}*"]
+    resources = ["${aws_ecr_repository.ecr.arn}"]
   }
 }
 
