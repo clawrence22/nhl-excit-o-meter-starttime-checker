@@ -15,12 +15,12 @@ def handler(event, context):
     
     raw_data = nhl_resonse.json()
 
-    if not raw_data.get("dates"):
+    if len(raw_data["gameWeek"][0]["games"]) == 0:
         logger.info("No games scheduled for today.")
         return "No games scheduled for today."
     
 
-    first_state_timestamp_utc = raw_data["dates"][0]["games"][0]["startTimeUTC"]
+    first_state_timestamp_utc = raw_data["gameWeek"][0]["games"][0]["startTimeUTC"]
 
     logger.info(f"NHL Game Data fetch will start at: {first_state_timestamp_utc}")
     return 'Successfully fetched NHL schedule and logged first game start time.'
