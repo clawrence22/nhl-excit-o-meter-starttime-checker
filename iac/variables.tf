@@ -13,6 +13,10 @@ variable "project_name" {
 variable "lambda_version" {
   description = "Version tag for Lambda deployment."
   type        = string
-  default     = "latest"
+}
+
+variable "lambda_sched_expr" {
+  description = "Schedule expression for lambda"
+  type        = string
 }
 
