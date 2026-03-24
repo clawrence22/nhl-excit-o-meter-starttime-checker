@@ -28,12 +28,13 @@ jobs:
 
     - name: Install dependencies
       run: |
+        mkdir -p package
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install --target ./package -r requirements.txt
 
     - name: Create deployment package
       run: |
-        zip -r lambda_function.zip src/lambda_function.py
+        zip -r lambda_function.zip
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
