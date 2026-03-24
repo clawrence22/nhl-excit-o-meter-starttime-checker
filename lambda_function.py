@@ -1,6 +1,6 @@
 import sys
 import logging
-from package import requests
+import requests
 
 logger = logging.getLogger()
 logger.setLevel("INFO")
