@@ -51,7 +51,7 @@ resource "aws_lambda_function" "mylambda" {
   role          = aws_iam_role.lambda.arn
   package_type  = "Zip"
   runtime       = "python3.12"
-  handler       = "lambda_function.handler"
+  handler       = "src/lambda_function.handler"
   s3_bucket     = aws_s3_bucket.lambda_deploy.bucket
   s3_key        = "lambda_function-${var.lambda_version}.zip"
 
