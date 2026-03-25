@@ -39,9 +39,25 @@ def handler(event, context):
             ScheduleExpression=f"at({scheduled_time})",
             ScheduleExpressionTimezone='UTC',
             Target={
-                'Arn': 'arn:aws:lambda:us-east-1:871806636838:function:nhl-excit-o-meter-starttime-checker',
+                'Arn': 'arn:aws:ecs:us-east-1:871806636838:cluster/nhl-excite-o-meter-data-cluster',
                 'RoleArn': 'arn:aws:iam::871806636838:role/nhl-excit-o-meter-starttime-checker-role',
-                'Input': '{}'
+                'EcsParameters': {
+                    'TaskDefinitionArn': 'arn:aws:ecs:us-east-1:871806636838:task-definition/nhl-excite-o-meter-data-task:11',
+                    'TaskCount': 1,
+                    'LaunchType': 'FARGATE'
+                },
+                'NetworkConfiguration' :{
+                    'awsvpcConfiguration': {
+                        'Subnets': [
+                            'subnet-036d25c00629af481'
+                            'subnet-0cc61dc319782a5dd'
+                        ],
+                        'SecurityGroups' : [
+                            'sg-0dd61ca2df34bf514'
+                        ],
+                        'AssignPublicIp': 'ENABLED'
+                    }
+                }
             },
             State='ENABLED',
             FlexibleTimeWindow={
