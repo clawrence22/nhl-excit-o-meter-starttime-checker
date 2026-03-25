@@ -24,7 +24,7 @@ def handler(event, context):
 
     actual_start_time = raw_data["gameWeek"][0]["games"][0]["startTimeUTC"]
 
-    actual_start_time_minus_5_minutes = datetime.strptime(actual_start_time, "%Y-%m-%dT%H:%M:%SZ") - timedelta(minutes=5)
+    actual_start_time_minus_5_minutes = datetime.strptime(actual_start_time, "yyyy-mm-ddThh:mm:ssZ") - timedelta(minutes=5)
 
     scheduled_time = actual_start_time_minus_5_minutes.strftime("yyyy-mm-ddThh:mm:ss")
 

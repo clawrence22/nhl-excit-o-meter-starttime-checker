@@ -52,6 +52,23 @@ resource "aws_s3_bucket" "lambda_deploy" {
   bucket = "${var.project_name}-lambda-deploy"
 }
 
+# #s3 bucket lifecycle rule to delete all but the 3 most recent objects
+# resource "aws_s3_bucket_lifecycle_configuration" "lambda_deploy_lifecycle" {
+#   bucket = aws_s3_bucket.lambda_deploy.id
+#   rule {
+#     id     = "lambda_deploy_lifecycle_rule"
+#     status = "Enabled"
+
+#     noncurrent_version_expiration {
+#       noncurrent_days = 1
+#     }
+
+#     expiration {
+#       days = 7
+#     }
+#   }
+# }
+
 resource "aws_lambda_function" "mylambda" {
   function_name = "nhl-excit-o-meter-starttime-checker"
   role          = aws_iam_role.lambda.arn
