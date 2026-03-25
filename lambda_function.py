@@ -35,10 +35,12 @@ def handler(event, context):
     
     try:
         scheduler.create_schedule(
+            ActionAfterCompletion='DELETE',
             Name='NHLGameStartTimeTrigger',
             ScheduleExpression=f"at({scheduled_time})",
             ScheduleExpressionTimezone='UTC',
             Target={
+                
                 'Arn': 'arn:aws:ecs:us-east-1:871806636838:cluster/nhl-excite-o-meter-data-cluster',
                 'RoleArn': 'arn:aws:iam::871806636838:role/nhl-excit-o-meter-starttime-checker-role',
                 'EcsParameters': {
