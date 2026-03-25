@@ -44,9 +44,8 @@ def handler(event, context):
                 'EcsParameters': {
                     'TaskDefinitionArn': 'arn:aws:ecs:us-east-1:871806636838:task-definition/nhl-excite-o-meter-data-task:11',
                     'TaskCount': 1,
-                    'LaunchType': 'FARGATE'
-                },
-                'NetworkConfiguration' :{
+                    'LaunchType': 'FARGATE',
+                    'NetworkConfiguration' :{
                     'awsvpcConfiguration': {
                         'Subnets': [
                             'subnet-036d25c00629af481'
@@ -58,6 +57,7 @@ def handler(event, context):
                         'AssignPublicIp': 'ENABLED'
                     }
                 }
+                },
             },
             State='ENABLED',
             FlexibleTimeWindow={
