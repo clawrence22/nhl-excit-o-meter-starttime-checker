@@ -76,7 +76,7 @@ resource "aws_scheduler_schedule" "start_lambda" {
     mode = "OFF"
   }
 
-  schedule_expression = "rate(${var.lambda_sched_expr})"
+  schedule_expression = "cron(${var.lambda_sched_expr})"
   schedule_expression_timezone = "America/Phoenix"
   target {
     arn      = aws_lambda_function.mylambda.arn
