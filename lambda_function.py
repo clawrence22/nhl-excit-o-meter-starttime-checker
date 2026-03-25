@@ -26,25 +26,29 @@ def handler(event, context):
 
     actual_start_time_minus_5_minutes = datetime.strptime(actual_start_time, "%Y-%m-%dT%H:%M:%SZ") - timedelta(minutes=5)
 
-    first_state_timestamp_utc = actual_start_time_minus_5_minutes.strftime("%Y-%m-%dT%H:%M:%SZ")
+    scheduled_time = actual_start_time_minus_5_minutes.strftime("yyyy-mm-ddThh:mm:ss")
 
-    #create scheduler with boto3 to trigger lambda at first_state_timestamp_utc
+    # create scheduler with boto3 to trigger lambda at scheduled_time
     scheduler = boto3.client('scheduler')
     
     try:
         scheduler.create_schedule(
             Name='NHLGameStartTimeTrigger',
-            ScheduleExpression=f"at({first_state_timestamp_utc})",
+            ScheduleExpression=f"at({scheduled_time})",
             ScheduleExpressionTimezone='UTC',
             Target={
-                'Arn': context.invoked_function_arn,
-                'RoleArn': 'arn:aws:lambda:us-east-1:871806636838:function:nhl-excit-o-meter-starttime-checker',
+                'Arn': 'arn:aws:lambda:us-east-1:871806636838:function:nhl-excit-o-meter-starttime-checker',
+                'RoleArn': 'arn:aws:iam::871806636838:role/nhl-excit-o-meter-starttime-checker-role',
                 'Input': '{}'
+            },
+            State='ENABLED',
+            FlexibleTimeWindow={
+                'Mode': 'OFF'
             }
         )
     except Exception as e:
         logger.error(f"Failed to create schedule: {e}")
         return f"Error creating schedule: {e}"
 
-    logger.info(f"NHL Game Data fetch will start at: {first_state_timestamp_utc}")
+    logger.info(f"NHL Game Data fetch will start at: {scheduled_time} UTC")
     return 'Successfully fetched NHL schedule and logged first game start time.'
