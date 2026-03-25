@@ -17,10 +17,16 @@ data aws_iam_policy_document lambda_policy {
     effect = "Allow"
 
     actions = [
-      "lambda:*"
+      "lambda:*",
+      "scheduler:Create*",
+      "scheduler:Get*",
+      "scheduler:List*",
+      "scheduler:Update*",
+      "scheduler:Delete*",
+      "iam:PassRole"
     ]
 
-    resources = [aws_lambda_function.mylambda.arn]
+    resources = [aws_lambda_function.mylambda.arn,"arn:aws:scheduler:us-east-1:871806636838:schedule/default/NHLGameStartTimeTrigger","arn:aws:iam::871806636838:role/nhl-excit-o-meter-starttime-checker-role"]
   }
 }
 

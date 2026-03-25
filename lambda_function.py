@@ -28,6 +28,8 @@ def handler(event, context):
 
     scheduled_time = actual_start_time_minus_5_minutes.strftime("yyyy-mm-ddThh:mm:ss")
 
+    logger.info(f"Time Calculated: {scheduled_time} UTC")
+
     # create scheduler with boto3 to trigger lambda at scheduled_time
     scheduler = boto3.client('scheduler')
     
