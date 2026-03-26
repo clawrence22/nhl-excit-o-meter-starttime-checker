@@ -24,7 +24,7 @@ def handler(event, context):
 
     actual_start_time = raw_data["gameWeek"][0]["games"][0]["startTimeUTC"]
 
-    actual_start_time_minus_5_minutes = datetime.strptime(actual_start_time, "%Y-%m-%dT%H:%M:%SZ") + timedelta(minutes=75)
+    actual_start_time_minus_5_minutes = datetime.strptime(actual_start_time, "%Y-%m-%dT%H:%M:%SZ") + timedelta(minutes=105)
 
     scheduled_time = actual_start_time_minus_5_minutes.strftime("%Y-%m-%dT%H:%M:%S")
 
@@ -44,7 +44,7 @@ def handler(event, context):
                 'Arn': 'arn:aws:ecs:us-east-1:871806636838:cluster/nhl-excite-o-meter-data-cluster',
                 'RoleArn': 'arn:aws:iam::871806636838:role/nhl-excit-o-meter-starttime-checker-role',
                 'EcsParameters': {
-                    'TaskDefinitionArn': 'arn:aws:ecs:us-east-1:871806636838:task-definition/nhl-excite-o-meter-data-task:11',
+                    'TaskDefinitionArn': 'arn:aws:ecs:us-east-1:871806636838:task-definition/nhl-excite-o-meter-data-task',
                     'TaskCount': 1,
                     'LaunchType': 'FARGATE',
                     'NetworkConfiguration' :{
