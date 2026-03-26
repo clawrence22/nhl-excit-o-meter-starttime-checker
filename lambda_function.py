@@ -50,7 +50,7 @@ def handler(event, context):
                     'NetworkConfiguration' :{
                     'awsvpcConfiguration': {
                         'Subnets': [
-                            'subnet-036d25c00629af481'
+                            'subnet-036d25c00629af481',
                             'subnet-0cc61dc319782a5dd'
                         ],
                         'SecurityGroups' : [
