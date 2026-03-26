@@ -3,6 +3,7 @@ import logging
 from datetime import datetime, timedelta
 import requests
 import boto3
+import time
 
 logger = logging.getLogger()
 logger.setLevel("INFO")
@@ -20,6 +21,11 @@ def handler(event, context):
     if len(raw_data["gameWeek"][0]["games"]) == 0:
         logger.info("No games scheduled for today.")
         return "No games scheduled for today."
+    
+    if raw_data["gameWeek"][0]["date"] != datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d"):
+        logger.info("Games not updated for today yet! will try again in 30 minutes.")
+        time.sleep(1800)
+        raise Exception("Games not updated for today yet! will try again in 30 minutes.")
     
 
     actual_start_time = raw_data["gameWeek"][0]["games"][0]["startTimeUTC"]
