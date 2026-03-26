@@ -1,6 +1,6 @@
 import sys
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta,timezone
 import requests
 import boto3
 import time
@@ -22,7 +22,7 @@ def handler(event, context):
         logger.info("No games scheduled for today.")
         return "No games scheduled for today."
     
-    if raw_data["gameWeek"][0]["date"] != datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d"):
+    if raw_data["gameWeek"][0]["date"] != datetime.now(timezone.utc).strftime("%Y-%m-%d"):
         logger.info("Games not updated for today yet! will try again when AWS trys again")
         time.sleep(1800)
         raise Exception("Games not updated for today yet! will try again in 30 minutes.")
@@ -32,7 +32,7 @@ def handler(event, context):
 
     actual_start_time_minus_5_minutes = datetime.strptime(actual_start_time, "%Y-%m-%dT%H:%M:%SZ") - timedelta(minutes=5)
 
-    if actual_start_time_minus_5_minutes < datetime.now(datetime.timezone.utc):
+    if actual_start_time_minus_5_minutes < datetime.now(timezone.utc):
         logger.info("Time has already passed for today's game! Start Data Collection ECS now!")
         run_ecs_task()
     else:
