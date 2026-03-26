@@ -36,11 +36,13 @@ def handler(event, context):
     if actual_start_time_minus_5_minutes < datetime.now(timezone.utc):
         logger.info("Time has already passed for today's game! Start Data Collection ECS now!")
         run_ecs_task()
+        return "Time has already passed for today's game! Start Data Collection ECS now!"
     else:
 
         scheduled_time = actual_start_time_minus_5_minutes.strftime("%Y-%m-%dT%H:%M:%S")
         logger.info(f"Start Time Calculated: {scheduled_time} UTC")
         create_scheduler(scheduled_time)
+        return f"Successfully fetched NHL schedule and logged first game start time. Data collection will start at: {scheduled_time} UTC"
 
 def run_ecs_task():
     ecs_cluser = 'nhl-excite-o-meter-data-cluster'
