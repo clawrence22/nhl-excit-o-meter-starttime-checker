@@ -67,12 +67,12 @@ def run_ecs_task():
         networkConfiguration={
             'awsvpcConfiguration': {
                 'subnets': [
-                    'subnet-0de4c6f94d02724eb'
+                    'subnet-0cc61dc319782a5dd'
                 ],
                 'securityGroups': [
                 'sg-0dd61ca2df34bf514',
                 ],
-                'assignPublicIp': 'DISABLED'
+                'assignPublicIp': 'ENABLED'
             }
         },
         taskDefinition=ecs_task_definition,
@@ -101,13 +101,12 @@ def create_scheduler(scheduled_time):
                     'NetworkConfiguration' :{
                     'awsvpcConfiguration': {
                         'Subnets': [
-                            'subnet-036d25c00629af481',
                             'subnet-0cc61dc319782a5dd'
                         ],
                         'SecurityGroups' : [
                             'sg-0dd61ca2df34bf514'
                         ],
-                        'AssignPublicIp': 'DISABLED'
+                        'AssignPublicIp': 'ENABLED'
                     }
                 }
                 },
