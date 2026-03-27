@@ -4,6 +4,8 @@ from datetime import datetime, timedelta,timezone
 import requests
 import boto3
 import time
+from zoneinfo import ZoneInfo
+
 
 logger = logging.getLogger()
 logger.setLevel("INFO")
@@ -22,7 +24,7 @@ def handler(event, context):
         logger.info("No games scheduled for today.")
         return "No games scheduled for today."
     
-    if raw_data["gameWeek"][0]["date"] != datetime.now(timezone(timedelta(hours=-7.0)).strftime("%Y-%m-%d"):
+    if raw_data["gameWeek"][0]["date"] != datetime.now(ZoneInfo("America/Phoenix")).strftime("%Y-%m-%d"):
         logger.info("Games not updated for today yet! will try again when AWS trys again")
         time.sleep(1800)
         raise Exception("Games not updated for today yet! will try again in 30 minutes.")
