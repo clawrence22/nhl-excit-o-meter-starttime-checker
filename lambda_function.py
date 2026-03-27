@@ -64,7 +64,6 @@ def run_ecs_task():
         ],
         cluster=ecs_cluser,
         count=1,
-        launchType='FARGATE',
         networkConfiguration={
             'awsvpcConfiguration': {
                 'subnets': [
