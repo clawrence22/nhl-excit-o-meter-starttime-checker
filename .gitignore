@@ -36,3 +36,5 @@ override.tf.json
 *_override.tf.json
 *.auto.tfvars
 
+adhoc_lambda.sh
+response.json
